@@ -62,7 +62,7 @@ const testClickReady = (e) => {
     title3.innerHTML = "배경화면이 초록색이 되면 클릭해주세요.";
     mainBox.removeEventListener("click", testClickReady);
     mainBox.addEventListener("click", isFailClick);
-    setTimeoutTest = setTimeout(testClickQuickly, sec * 200);
+    setTimeoutTest = setTimeout(testClickQuickly, sec * 500);
     mainBox.removeEventListener("click", reStartErrorPage);
   }
 };

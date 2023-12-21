@@ -14,40 +14,42 @@ const getRandSec = () => {
 
 let sec = getRandSec();
 
-const testReadyToWay = () => {
-  mainBox.addEventListener("click", testReady);
+const testClickReadyToWay = () => {
+  mainBox.addEventListener("click", testClickReady);
 };
 
-const backgroundColorPink = () => {
-  title2.innerHTML = "시작";
-  title2.style.textAlign = "center";
-  title2.style.fontSize = "30px";
-  title3.innerHTML =
-    "총 기회는 5번 주어집니다. 다음준비화면애서 배경화면이 초록색이 되었을 때 클릭하시면 됩니다. 시작하시려면 현재화면을 클릭해주세요.";
-  title3.style.textAlign = "center";
-  document.querySelector(".title").style.display = "none";
-  document.querySelector(".start_button").style.display = "none";
-  mainBox.style.backgroundColor = "lightPink";
-
-  testReadyToWay();
+const rulesOfTest = (e) => {
+  if (e.target === document.querySelector(".start_button")) {
+    clickNumber = 0;
+    resultArray = [];
+    title2.innerHTML = "시작";
+    title2.style.textAlign = "center";
+    title2.style.fontSize = "30px";
+    title3.innerHTML =
+      "총 기회는 5번 주어집니다. 다음준비화면애서 배경화면이 초록색이 되었을 때 클릭하시면 됩니다. 시작하시려면 현재화면을 클릭해주세요.";
+    title3.style.textAlign = "center";
+    document.querySelector(".title").style.display = "none";
+    document.querySelector(".start_button").style.display = "none";
+    mainBox.style.backgroundColor = "lightPink";
+  }
+  e.stopPropagation();
+  testClickReadyToWay();
 };
 
-document
-  .querySelector(".start_button")
-  .addEventListener("click", backgroundColorPink);
+document.querySelector(".start_button").addEventListener("click", rulesOfTest);
 
-const testStart = () => {
+const testClickQuickly = () => {
   falseOrTrue = true;
   mainBox.style.backgroundColor = "lightGreen";
   title2.innerHTML = "클릭";
   title3.innerHTML = "클릭해주세요";
   t0 = performance.now();
-  testReadyToWay();
-  mainBox.addEventListener("click", timeAttack);
+  testClickReadyToWay();
+  mainBox.addEventListener("click", resultRepository);
   mainBox.removeEventListener("click", isFailClick);
 };
 
-const testReady = (e) => {
+const testClickReady = (e) => {
   clickNumber++;
 
   if (clickNumber > 5) {
@@ -58,16 +60,17 @@ const testReady = (e) => {
     mainBox.style.backgroundColor = "lightYellow";
     title2.innerHTML = "준비";
     title3.innerHTML = "배경화면이 초록색이 되면 클릭해주세요.";
-    mainBox.removeEventListener("click", testReady);
+    mainBox.removeEventListener("click", testClickReady);
     mainBox.addEventListener("click", isFailClick);
-    setTimeoutTest = setTimeout(testStart, sec * 200);
-    mainBox.removeEventListener("click", backTest);
+    setTimeoutTest = setTimeout(testClickQuickly, sec * 200);
+    mainBox.removeEventListener("click", reStartErrorPage);
   }
 };
 
-const backTest = () => {
-  clickNumber = 1;
-  testReady();
+const reStartErrorPage = () => {
+  clickNumber = 0;
+  resultArray = [];
+  testClickReady();
 };
 
 const isFailClick = () => {
@@ -77,10 +80,10 @@ const isFailClick = () => {
   title3.innerHTML =
     "준비 화면에서는 클릭이 불가합니다.화면이 초록색으로 바뀌면 클릭 해 주시길 바랍니다. 처음부터 시작하려면 화면을 클릭해주세요.";
 
-  mainBox.addEventListener("click", backTest);
+  mainBox.addEventListener("click", reStartErrorPage);
 };
 
-const timeAttack = () => {
+const resultRepository = () => {
   t1 = performance.now();
   let 결과값 = t1 - t0;
   resultArray.push(결과값);
@@ -96,11 +99,14 @@ const testResult = (e) => {
   let result = sum / resultArray.length;
 
   if (e.target === mainBox) {
-    console.log(resultArray);
     title2.innerHTML = "테스트결과";
     title3.innerHTML = `다섯번의 평균값은 ${result.toFixed(2)} ms`;
     mainBox.style.backgroundColor = "white";
+    document.querySelector(".start_button").style.display = "block";
+    document.querySelector(".start_button").innerHTML = "다시해보기";
+    document.querySelector(".start_button").style.margin = "auto";
+    document.querySelector(".start_button").style.marginTop = "30px";
     mainBox.removeEventListener("click", testResult);
-    mainBox.removeEventListener("click", timeAttack);
+    mainBox.removeEventListener("click", resultRepository);
   }
 };

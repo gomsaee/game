@@ -1,9 +1,33 @@
 .box {
-  width: 70%;
   margin: auto;
   padding: 30px;
   height: 200px;
+  margin-top: 10px;
+}
+.big-box {
+  width: 70%;
+  margin: auto;
   margin-top: 50px;
+}
+.text-right {
+  display: none;
+  text-align: right;
+  line-height: 1.5;
+}
+.progress-bar-orange {
+  position: absolute;
+  width: 0%;
+  height: 1rem;
+  border-radius: 0.25rem;
+  background-color: #ffa600;
+  transition: all 1s;
+}
+.progress-bar {
+  position: relative;
+  display: none;
+  height: 1rem;
+  border-radius: 0.25rem;
+  background-color: #e9ecef;
 }
 
 .main_box {

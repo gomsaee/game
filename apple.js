@@ -2,6 +2,9 @@ let clickNumber = 0;
 let title2 = document.querySelector(".title_2");
 let title3 = document.querySelector(".title_3");
 let mainBox = document.querySelector(".main_box");
+let progressBar = document.querySelector(".progress-bar");
+let progressBarOrange = document.querySelector(".progress-bar-orange");
+let textRight = document.querySelector(".text-right");
 let t0;
 let t1;
 let falseOrTrue = false;
@@ -51,12 +54,14 @@ const testClickQuickly = () => {
 
 const testClickReady = (e) => {
   clickNumber++;
-
   if (clickNumber > 5) {
     testResult(e);
     return;
   }
   if (clickNumber > 0) {
+    console.log(clickNumber);
+    textRight.style.display = "block";
+    progressBar.style.display = "block";
     mainBox.style.backgroundColor = "lightYellow";
     title2.innerHTML = "준비";
     title3.innerHTML = "배경화면이 초록색이 되면 클릭해주세요.";
@@ -65,11 +70,40 @@ const testClickReady = (e) => {
     setTimeoutTest = setTimeout(testClickQuickly, sec * 500);
     mainBox.removeEventListener("click", reStartErrorPage);
   }
+  if (clickNumber === 1) {
+    textRight.innerHTML = "0 / 5";
+    progressBarOrange.style.width = "0%";
+  }
+  if (clickNumber === 2) {
+    textRight.innerHTML = "1 / 5";
+    progressBarOrange.style.width = "20%";
+  }
+  if (clickNumber === 3) {
+    textRight.innerHTML = "2 / 5";
+    progressBarOrange.style.width = "40%";
+  }
+  if (clickNumber === 4) {
+    textRight.innerHTML = "3 / 5";
+    progressBarOrange.style.width = "60%";
+  }
+  if (clickNumber === 5) {
+    textRight.innerHTML = "4 / 5";
+    progressBarOrange.style.width = "80%";
+  }
+  if (clickNumber > 5) {
+    textRight.innerHTML = "5 / 5";
+    progressBarOrange.style.width = "100%";
+  }
 };
 
 const reStartErrorPage = () => {
   clickNumber = 0;
   resultArray = [];
+
+  textRight.style.display = "block";
+  progressBar.style.display = "block";
+  progressBarOrange.style.width = "0%";
+
   testClickReady();
 };
 
@@ -99,6 +133,8 @@ const testResult = (e) => {
   let result = sum / resultArray.length;
 
   if (e.target === mainBox) {
+    textRight.style.display = "none";
+    progressBar.style.display = "none";
     title2.innerHTML = "테스트결과";
     title3.innerHTML = `다섯번의 평균값은 ${result.toFixed(2)} ms`;
     mainBox.style.backgroundColor = "white";

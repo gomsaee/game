@@ -1,3 +1,4 @@
+@charset "UTF-8";
 .box, .start_box, .main_box {
   width: 70%;
   margin: auto;
@@ -21,8 +22,45 @@
   margin-top: 10px;
   border-radius: 5px;
   padding: 10px;
+  border-style: none;
+  animation-name: 흔들흔들;
+  animation-duration: 1s;
 }
 
+.start_button:hover {
+  background-color: #ffc107;
+  color: white;
+}
+
+@keyframes 흔들흔들 {
+  0% {
+    transform: scale(1.2);
+  }
+  10% {
+    rotate: -8deg;
+  }
+  20% {
+    rotate: -8deg;
+  }
+  30% {
+    rotate: 8deg;
+  }
+  40% {
+    rotate: -8deg;
+  }
+  50% {
+    rotate: 8deg;
+  }
+  60% {
+    rotate: -8deg;
+  }
+  70% {
+    rotate: 8deg;
+  }
+  100% {
+    rotate: -8deg;
+  }
+}
 .start_box {
   background-color: lightpink;
 }/*# sourceMappingURL=apple.css.map */

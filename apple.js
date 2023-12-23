@@ -90,7 +90,7 @@ const testClickReady = (e) => {
     textRight.innerHTML = "4 / 5";
     progressBarOrange.style.width = "80%";
   }
-  if (clickNumber > 5) {
+  if (clickNumber === 6) {
     textRight.innerHTML = "5 / 5";
     progressBarOrange.style.width = "100%";
   }

@@ -18,6 +18,22 @@
   line-height: 1.5;
 }
 
+.text-left {
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  text-align: left;
+}
+
+.text-left-try1,
+.text-left-try2,
+.text-left-try3,
+.text-left-try4,
+.text-left-try5 {
+  display: none;
+}
+
 .progress-bar-orange {
   position: absolute;
   width: 0%;
@@ -37,6 +53,7 @@
 
 .main_box {
   background-color: lightgrey;
+  margin-bottom: 20px;
 }
 
 .title {

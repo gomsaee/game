@@ -5,9 +5,9 @@ let mainBox = document.querySelector(".main_box");
 let progressBar = document.querySelector(".progress-bar");
 let progressBarOrange = document.querySelector(".progress-bar-orange");
 let textRight = document.querySelector(".text-right");
+let textLeft = document.querySelector(".text-left");
 let t0;
 let t1;
-let falseOrTrue = false;
 let resultArray = [];
 let setTimeoutTest;
 
@@ -16,10 +16,6 @@ const getRandSec = () => {
 };
 
 let sec = getRandSec();
-
-const testClickReadyToWay = () => {
-  mainBox.addEventListener("click", testClickReady);
-};
 
 const rulesOfTest = (e) => {
   if (e.target === document.querySelector(".start_button")) {
@@ -36,30 +32,24 @@ const rulesOfTest = (e) => {
     mainBox.style.backgroundColor = "lightPink";
   }
   e.stopPropagation();
-  testClickReadyToWay();
+  mainBox.addEventListener("click", testClickReady);
 };
 
 document.querySelector(".start_button").addEventListener("click", rulesOfTest);
 
 const testClickQuickly = () => {
-  falseOrTrue = true;
   mainBox.style.backgroundColor = "lightGreen";
   title2.innerHTML = "클릭";
   title3.innerHTML = "클릭해주세요";
   t0 = performance.now();
-  testClickReadyToWay();
-  mainBox.addEventListener("click", resultRepository);
+  mainBox.addEventListener("click", testClickReady);
+
   mainBox.removeEventListener("click", isFailClick);
 };
 
 const testClickReady = (e) => {
   clickNumber++;
-  if (clickNumber > 5) {
-    testResult(e);
-    return;
-  }
   if (clickNumber > 0) {
-    console.log(clickNumber);
     textRight.style.display = "block";
     progressBar.style.display = "block";
     mainBox.style.backgroundColor = "lightYellow";
@@ -67,7 +57,7 @@ const testClickReady = (e) => {
     title3.innerHTML = "배경화면이 초록색이 되면 클릭해주세요.";
     mainBox.removeEventListener("click", testClickReady);
     mainBox.addEventListener("click", isFailClick);
-    setTimeoutTest = setTimeout(testClickQuickly, sec * 500);
+    setTimeoutTest = setTimeout(testClickQuickly, sec * 200);
     mainBox.removeEventListener("click", reStartErrorPage);
   }
   if (clickNumber === 1) {
@@ -75,24 +65,55 @@ const testClickReady = (e) => {
     progressBarOrange.style.width = "0%";
   }
   if (clickNumber === 2) {
+    resultRepository();
     textRight.innerHTML = "1 / 5";
     progressBarOrange.style.width = "20%";
+    document.querySelector(".text-left-try1").style.display = "block";
+    document.querySelector(
+      ".text-left-try1"
+    ).innerHTML = `첫번째 시도 : ${resultArray[0].toFixed(2)} ms`;
   }
   if (clickNumber === 3) {
+    resultRepository();
     textRight.innerHTML = "2 / 5";
     progressBarOrange.style.width = "40%";
+    document.querySelector(".text-left-try2").style.display = "block";
+    document.querySelector(
+      ".text-left-try2"
+    ).innerHTML = `두번째 시도 : ${resultArray[1].toFixed(2)} ms`;
   }
   if (clickNumber === 4) {
+    resultRepository();
     textRight.innerHTML = "3 / 5";
     progressBarOrange.style.width = "60%";
+    document.querySelector(".text-left-try3").style.display = "block";
+    document.querySelector(
+      ".text-left-try3"
+    ).innerHTML = `세번째 시도 : ${resultArray[2].toFixed(2)} ms`;
   }
   if (clickNumber === 5) {
+    resultRepository();
     textRight.innerHTML = "4 / 5";
     progressBarOrange.style.width = "80%";
+    document.querySelector(".text-left-try4").style.display = "block";
+    document.querySelector(
+      ".text-left-try4"
+    ).innerHTML = `네번째 시도 : ${resultArray[3].toFixed(2)} ms`;
   }
   if (clickNumber > 5) {
+    resultRepository();
     textRight.innerHTML = "5 / 5";
     progressBarOrange.style.width = "100%";
+    mainBox.style.backgroundColor = "white";
+    title2.innerHTML = "잠시만 기다려주세요.";
+    title3.innerHTML = "";
+    document.querySelector(".text-left-try5").style.display = "block";
+    document.querySelector(
+      ".text-left-try5"
+    ).innerHTML = `다섯번째 시도 : ${resultArray[4].toFixed(2)} ms`;
+    clearTimeout(setTimeoutTest);
+    testResult(e);
+    return;
   }
 };
 
@@ -103,6 +124,11 @@ const reStartErrorPage = () => {
   textRight.style.display = "block";
   progressBar.style.display = "block";
   progressBarOrange.style.width = "0%";
+  document.querySelector(".text-left-try1").style.display = "none";
+  document.querySelector(".text-left-try2").style.display = "none";
+  document.querySelector(".text-left-try3").style.display = "none";
+  document.querySelector(".text-left-try4").style.display = "none";
+  document.querySelector(".text-left-try5").style.display = "none";
 
   testClickReady();
 };
@@ -123,7 +149,7 @@ const resultRepository = () => {
   resultArray.push(결과값);
 };
 
-const testResult = (e) => {
+const timeResult = () => {
   let sum = 0;
 
   for (i = 0; i < resultArray.length; i++) {
@@ -132,17 +158,27 @@ const testResult = (e) => {
 
   let result = sum / resultArray.length;
 
-  if (e.target === mainBox) {
-    textRight.style.display = "none";
-    progressBar.style.display = "none";
-    title2.innerHTML = "테스트결과";
-    title3.innerHTML = `다섯번의 평균값은 ${result.toFixed(2)} ms`;
-    mainBox.style.backgroundColor = "white";
-    document.querySelector(".start_button").style.display = "block";
-    document.querySelector(".start_button").innerHTML = "다시해보기";
-    document.querySelector(".start_button").style.margin = "auto";
-    document.querySelector(".start_button").style.marginTop = "30px";
-    mainBox.removeEventListener("click", testResult);
-    mainBox.removeEventListener("click", resultRepository);
-  }
+  textRight.style.display = "none";
+  progressBar.style.display = "none";
+  document.querySelector(".text-left-try1").style.display = "none";
+  document.querySelector(".text-left-try2").style.display = "none";
+  document.querySelector(".text-left-try3").style.display = "none";
+  document.querySelector(".text-left-try4").style.display = "none";
+  document.querySelector(".text-left-try5").style.display = "none";
+
+  title2.innerHTML = "테스트결과";
+  title3.innerHTML = `다섯번의 평균값은 ${result.toFixed(2)} ms`;
+
+  mainBox.style.backgroundColor = "white";
+  document.querySelector(".start_button").style.display = "block";
+  document.querySelector(".start_button").innerHTML = "다시해보기";
+  document.querySelector(".start_button").style.margin = "auto";
+  document.querySelector(".start_button").style.marginTop = "30px";
+  mainBox.removeEventListener("click", testResult);
+  mainBox.removeEventListener("click", resultRepository);
+  mainBox.removeEventListener("click", isFailClick);
+};
+
+const testResult = () => {
+  setTimeout(timeResult, 1000);
 };
